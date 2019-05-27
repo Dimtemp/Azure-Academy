@@ -1,6 +1,6 @@
-# Lab: Deploying a VM.
+# Lab: Deploying a Virtual Machine
 
-## Exercise 1: Deploy an Azure VM from the Azure portal.
+## Exercise 1: Deploy an Azure VM from the Azure portal
 
 #### Task 1: Open the Azure Portal
 
@@ -30,7 +30,7 @@
     
       - click **OK** to create the resource group.
       
-    - In the **Name** text box, enter the value **lab03vm0**.
+    - In the **Name** text box, enter the value **vm1**.
 
     - In the **Region** drop-down list, select an Azure region to which you want to deploy resources in this lab.
     
@@ -52,7 +52,7 @@
     
 1. On the **Disks** tab, perform the following tasks:
 
-    - Ensure that the **OS disk type** dropdown list entry is set to **Premium SSD**
+    - Ensure that the **OS disk type** dropdown list entry is set to **Standard SSD**
 
     - Click **Next: Networking >**
     
@@ -76,7 +76,7 @@
     
     - Leave the **Public inbound ports** option set to **Allow selected ports**
     
-    - Leave the **Select inbound ports** entry set to **HTTP**
+    - Leave the **Select inbound ports** entry set to **RDP**
 
     - Leave the **Accelerated networking** entry set to its default value.
 
@@ -84,11 +84,9 @@
     
 1. On the **Management** tab, perform the following tasks: 
 
-    - Leave the **Boot diagnostics** option set to its default value.
+    - Set the **Boot diagnostics** option to **Disabled**.
 
-    - Leave the **OS guest diagnostics** option set to its default value.
-
-    - Leave the **Diagnostics storage account** entry set to its default value.
+    - Set the **OS guest diagnostics** option to **Disabled**.
     
     - Leave the **System assigned managed identity** option set to its default value.
     
@@ -100,53 +98,18 @@
     
 1. On the **Create a virtual machine** blade, review the settings of your new virtual machine and click the **Create** button.
 
-1. Do not wait for the deployment to complete and proceed to the next task.
+1. Wait for the deployment to complete before proceding to the next task.
 
 
-#### Task 7: Validate that the Azure VM is serving web content
+#### Task 3: Connect to an Azure VM running Windows via a public IP address
 
-1. In the hub menu in the Azure portal, click **Resource groups**.
+1. In the Azure portal, navigate to the Resource Groups blade.
 
-1. On the **Resource groups** blade, click the entry representing the resource group into which you deployed the virtual machine.
+1. Click the **YOURNAME-RG** resource group to open it's contents.
 
-1. On the resource group blade, click the entry representing the **Virtual Machine** you deployed.
+1. Click the **vm1** virtual machine.
 
-1. On the **Virtual machine** blade, locate the **Public IP address** entry, and identify its value.
-
-
-
-
-#### Task 2: Connect to an Azure VM running Windows Server 2016 Datacenter via a public IP address
-
-1. In the Azure portal, navigate to the **az1000301-vm0** blade.
-
-1. From the **az1000301-vm0** blade, navigate to the **az1000301-vm0 - Networking** blade.
-
-1. On the **az1000301-vm0 - Networking** blade, review the inbound port rules of the network security group assigned to the network interface of **az1000301-vm0**.
-
-   > **Note**: The default configuration consisting of built-in rules block inbound connections from the internet (including connections via the RDP port TCP 3389)
-
-1. Add an inbound security rule to the existing network security group with the following settings:
-
-    - Source: **Any**
-
-    - Source port ranges: **\***
-
-    - Destination: **Any**
-
-    - Destination port ranges: **3389**
-
-    - Protocol: **TCP**
-
-    - Action: **Allow**
-
-    - Priority: **100**
-
-    - Name: **AllowInternetRDPInBound**
-
-1. In the Azure portal, display the **Overview** pane of the **az1000301-vm0** blade. 
-
-1. From the **Overview** pane of the **az1000301-vm0** blade, generate an RDP file and use it to connect to **az1000301-vm0**.
+1. From the **Overview** pane of the **vm1** blade, Select the **Connect** button to generate an RDP file and use it to connect to **vm1**.
 
 1. When prompted, authenticate by specifying the following credentials:
 
@@ -155,33 +118,14 @@
     - Password: **Pa55w.rd1234**
 
 
+#### Task 4: Remove lab resources
 
+1. In the Azure portal, navigate to the Resource Groups blade.
 
-> **Review**: In this exercise, you deployed a **Virtual Machine** from the Azure portal and connected to it using Remote Desktop Protocol (RDP).
+1. Click the **YOURNAME-RG** resource group to open it's contents.
 
-## Exercise 3: Remove lab resources
+1. Click the **Delete resource group** button.
 
-#### Task 1: Open Cloud Shell
+1. Type in the name of the resource group to confirm deletion.
 
-1. At the top of the portal, click the **Cloud Shell** icon to open the Cloud Shell pane.
-
-1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to list all resource groups you created in this lab:
-
-    ```
-    az group list --query "[?starts_with(name,'AADesignLab03')]".name --output tsv
-    ```
-
-1. Verify that the output contains only the resource groups you created in this lab. These groups will be deleted in the next task.
-
-#### Task 2: Delete resource groups
-
-1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to delete the resource groups you created in this lab
-
-    ```
-    az group list --query "[?starts_with(name,'AADesignLab03')]".name --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
-    ```
-
-1. Close the **Cloud Shell** prompt at the bottom of the portal.
-
-
-> **Review**: In this exercise, you removed the resources used in this lab.
+> **Review**: In this exercise, you deployed a **Virtual Machine** from the Azure portal and connected to it using Remote Desktop Protocol (RDP). After that you removed the resources used in this lab.
