@@ -1,4 +1,16 @@
-#### Task 1: Create an Azure Storage account
+# Lab: Creating a storage account
+
+## Exercise 1: Creating a storage account from the Azure portal.
+
+#### Task 1: Open the Azure Portal
+
+1. Open your web browser.
+
+1. In the web browser window, navigate to the **Azure Portal** (<https://portal.azure.com>).
+
+1. If prompted, authenticate with the user account the trainer has assigned to you.
+
+#### Task 2: Create an Azure Storage account
 
 1. In the upper left corner of the Azure portal, click **Create a resource**.
 
@@ -35,5 +47,23 @@
     - Click the **Create** button.
 
     > **Note**: This operation can take about 2 minutes.
+
+
+## Exercise 2: Creating a storage account using Windows PowerShell
+
+#### Task 1: Open Cloud Shell
+
+1. At the top of the portal, click the **Cloud Shell** icon to open the Cloud Shell pane.
+
+1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to create a storage account:
+
+Test-AzDNS
+
+1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to create a storage account:
+
+New-AzStorageAccount -ResourceGroupName 'YOURNAME-RG' -Name test647382 -SkuName Standard_LRS -Location westeurope
+ #    -Kind StorageV2 
+  
+Reconfigure to RA_GRS and verify properties
 
 
