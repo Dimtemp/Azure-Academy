@@ -55,9 +55,19 @@
 
 1. At the top of the portal, click the **Cloud Shell** icon to open the Cloud Shell pane.
 
-1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to create a storage account:
+#### Task 2: Identify an available DNS name for an Azure VM scale set deployment
 
-Test-AzDNS
+1. In the Cloud Shell pane, run the following command, substituting the placeholder &lt;custom-label&gt; with any string which is likely to be unique and the placeholder &lt;location-of-az1000301-RG&gt; with the name of the Azure region in which you created the **az1000301-RG** resource group.
+
+   ```
+   Test-AzDnsAvailability -DomainNameLabel <custom-label> -Location '<location-of-az1000301-RG>'
+   ```
+
+1. Verify that the command returned **True**. If not, rerun the same command with a different value of the &lt;custom-label&gt; until the command returns **True**. 
+
+1. Note the value of the &lt;custom-label&gt; that resulted in the successful outcome. You will need it in the next task
+
+#### Task 3: Identify an available DNS name for an Azure VM scale set deployment
 
 1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to create a storage account:
 
@@ -65,5 +75,4 @@ New-AzStorageAccount -ResourceGroupName 'YOURNAME-RG' -Name test647382 -SkuName 
  #    -Kind StorageV2 
   
 Reconfigure to RA_GRS and verify properties
-
 
