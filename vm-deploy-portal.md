@@ -22,7 +22,7 @@
     
     - In the **Resource group** section, click **Create new**.
     
-      - In the text box, type **YOURNAME**. Replace YOURNAME with the name the trainer has provided you. For example: Peter.
+      - In the text box, type **YOURNAMERG**. Replace YOURNAME with the name the trainer has provided you. For example: PeterRG.
     
       - click **OK** to create the resource group.
       
@@ -58,11 +58,11 @@
     
     - On the **Create virtual network** blade, specify the following settings and click **OK**:
 
-        - In the **Name** text box, enter the value **YOURNAME-vnet**.
+        - In the **Name** text box, enter the value **YOURNAMEvnet**.
 
         - In the **Address range** text box, enter the value **10.3.0.0/16**.
 
-        - In the **Subnet name** text box, enter the value **frontend**.
+        - In the **Subnet name** text box, enter the value **subnet0**.
 
         - In the **Subnet address range** text box, enter the value **10.3.0.0/24**, and click **OK**.
 
@@ -87,7 +87,7 @@
 
 1. In the Azure portal, navigate to the Resource Groups blade.
 
-1. Click the **YOURNAME** resource group to open it's contents.
+1. Click the **YOURNAMERG** resource group to open it's contents.
 
 1. Click the **vm1** virtual machine.
 
@@ -104,7 +104,7 @@
 
 1. In the Azure portal, navigate to the Resource Groups blade.
 
-1. Click the **YOURNAME** resource group to open it's contents.
+1. Click the **YOURNAMERG** resource group to open it's contents.
 
 1. Click the **Delete resource group** button.
 
