@@ -12,9 +12,9 @@
 
 #### Task 2: Create an Azure VM running Windows Server 2016 Datacenter.
 
-1. In the upper left corner of the Azure portal, click **Create a resource**.
+1. In the upper left corner of the Azure portal, click **+ Create a resource**.
 
-1. In the **New** blade, at the top of the **Popular** blade, click **Windows Server 2016 Datacenter** and press **Enter**.
+1. In the **New** blade, at the top of the **Popular** blade, click **Windows Server 2016 Datacenter**.
 
 1. On the **Basics** tab, perform the following tasks:
 
@@ -30,17 +30,17 @@
 
     - In the **Region** drop-down list, select an Azure region to which you want to deploy resources in this lab.
     
-    - In the **Availability options** drop-down list, leave it to default.
+    - Leve the **Availability options** to its default value.
 
     - Leave the entry in the **Image** drop-down list set to its default value.
 
-    - Ensure that the size is set to **Standard DS1 v2**
+    - Leave the **Size** to its default value.
 
     - In the **Username** text box, enter the value **Student**.
 
     - In the **Password** and **Confirm password** text boxes, enter the value **Pa55w.rd1234**.
 
-    - In the **Public inbound ports** section, select the **Allow selected port** option and, in the **Select inbound ports** drop-down list, select **RDP**.
+    - In the **Public inbound ports** section, select the **Allow selected port** option and, in the **Select one or more ports** drop-down list, select **RDP (3389)**.
 
     - Leave the **Already have a Windows license?** option set to **No**.
     
@@ -66,15 +66,7 @@
 
         - In the **Subnet address range** text box, enter the value **10.3.0.0/24**, and click **OK**.
 
-    - Leave the **Public IP** entry set to its default value.
-    
-    - Leave the **NIC network security group** option set to **Basic**.
-    
-    - Leave the **Public inbound ports** option set to **Allow selected ports**
-    
-    - Leave the **Select inbound ports** entry set to **RDP**
-
-    - Leave the **Accelerated networking** entry set to its default value.
+    - Leave all other options set to its default value.
 
     - Click **Next: Management >**
     
@@ -82,14 +74,8 @@
 
     - Set the **Boot diagnostics** option to **Disabled**.
 
-    - Set the **OS guest diagnostics** option to **Disabled**.
+    - Leave all other opties to its default values.
     
-    - Leave the **System assigned managed identity** option set to its default value.
-    
-    - Leave the **Enable auto-shutdown** option set to its default value.
-
-    - Leave the **Enable backup** option set to its default value.
-
     - Click the **Review + create** button.
     
 1. On the **Create a virtual machine** blade, review the settings of your new virtual machine and click the **Create** button.
