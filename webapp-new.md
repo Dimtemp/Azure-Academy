@@ -32,9 +32,10 @@
       
       Region: West Europe
 
-      App Service plan: leave default settings
+          App Service plan: Sku and size: choose "Change size" and in "Dev / Test" the B1 pricing tier.
       
 4. Klick **Review and Create**, review the webapp settings, and klick **Create**  
+5. Wait for the webapp to be created. This will take less than a minute.
 
 #### Task 3: Review your Web App URL 
 
