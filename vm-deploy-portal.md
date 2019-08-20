@@ -14,7 +14,7 @@
 
 1. In the upper left corner of the Azure portal, click **+ Create a resource**.
 
-1. In the **New** blade, at the top of the **Popular** blade, click **Windows Server 2016 Datacenter**.
+1. In the **New** blade, at the top of the **Popular** column, click **Windows Server 2016 VM**.
 
 1. On the **Basics** tab, perform the following tasks:
 
@@ -40,7 +40,7 @@
 
     - In the **Password** and **Confirm password** text boxes, enter the value **Pa55w.rd1234**.
 
-    - In the **Public inbound ports** section, select the **Allow selected port** option and, in the **Select one or more ports** drop-down list, select **RDP (3389)**.
+    - In the **Public inbound ports** section, select the **Allow selected ports** option and, in the **Select one or more ports** drop-down list, select **RDP (3389)**.
 
     - Leave the **Already have a Windows license?** option set to **No**.
     
@@ -52,6 +52,12 @@
 
     - Click **Next: Networking >**
     
+1. On the **Networking** tab, leave all settings to their default values. 
+
+    - Click **Next: Management >**
+
+of
+
 1. On the **Networking** tab, perform the following tasks: 
 
     - In the **Virtual network** section, click **Create new**. 
@@ -69,10 +75,10 @@
     - Leave all other options set to its default value.
 
     - Click **Next: Management >**
-    
+
 1. On the **Management** tab, perform the following tasks: 
 
-    - Set the **Boot diagnostics** option to **Disabled**.
+    - Set the **Boot diagnostics** option to **Off**.
 
     - Leave all other opties to its default values.
     
@@ -85,13 +91,15 @@
 
 #### Task 3: Connect to an Azure VM running Windows via a public IP address
 
-1. In the Azure portal, navigate to the Resource Groups blade.
+1. In the Azure portal, navigate to the **Resource Groups** blade (top left).
 
 1. Click the **YOURNAMERG** resource group to open it's contents.
 
 1. Click the **vm1** virtual machine.
 
-1. From the **Overview** pane of the **vm1** blade, Select the **Connect** button to generate an RDP file and use it to connect to **vm1**.
+1. From the **Overview** pane of the **vm1** blade, Select the **Connect** button.
+
+1. Click **Download RDP file** to generate an RDP file and use it to connect to **vm1**.
 
 1. When prompted, authenticate by specifying the following credentials:
 
@@ -109,5 +117,7 @@
 1. Click the **Delete resource group** button.
 
 1. Type in the name of the resource group to confirm deletion.
+
+1. Click click **delete**.
 
 > **Review**: In this exercise, you deployed a **Virtual Machine** from the Azure portal and connected to it using Remote Desktop Protocol (RDP). After that you removed the resources used in this lab.
