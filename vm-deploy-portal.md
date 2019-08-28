@@ -56,26 +56,6 @@
 
     - Click **Next: Management >**
 
-of
-
-1. On the **Networking** tab, perform the following tasks: 
-
-    - In the **Virtual network** section, click **Create new**. 
-    
-    - On the **Create virtual network** blade, specify the following settings and click **OK**:
-
-        - In the **Name** text box, enter the value **YOURNAMEvnet**.
-
-        - In the **Address range** text box, enter the value **10.3.0.0/16**.
-
-        - In the **Subnet name** text box, enter the value **subnet0**.
-
-        - In the **Subnet address range** text box, enter the value **10.3.0.0/24**, and click **OK**.
-
-    - Leave all other options set to its default value.
-
-    - Click **Next: Management >**
-
 1. On the **Management** tab, perform the following tasks: 
 
     - Set the **Boot diagnostics** option to **Off**.
