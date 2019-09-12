@@ -75,4 +75,5 @@ New-AzStorageAccount -ResourceGroupName 'YOURNAME-RG' -Name test647382 -SkuName 
  #    -Kind StorageV2 
   
 Reconfigure to RA_GRS and verify properties
+TEST
 
