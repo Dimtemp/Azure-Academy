@@ -15,3 +15,4 @@ UITWERKEN
 #### Task 2: Create an Azure VM running Windows Server 2016 Datacenter.
 
 1. In the upper left corner of the Azure portal, click **Create a resource**.
+TEST aanvulling
