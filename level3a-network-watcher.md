@@ -8,131 +8,21 @@ Adatum Corporation wants to monitor Azure virtual network connectivity by using 
 - VNET2: VM2 in North Europe
 - Storage Account in East US
 
+
+### Exercise 1: Prepare infrastructure for Azure Network Watcher-based monitoring
+
+1. Open Azure Portal, Cloud Shell
+
 ```powershell
 $cred = Get-Credential -UserName student
 # fill in Pa55w.rd1234 as the password
 New-AzResourceGroup -location westeurope -name STUDENTID
-New-AzVM -name STUDENTIDVM1 -credential $cred -location westeurope 
+New-AzVM -name STUDENTIDVM1 -credential $cred -location westeurope
 New-AzVM -name STUDENTIDVM2 -credential $cred -location northeurope
 # fill in student as the username and Pa55w.rd1234 as the password
-New-AzStorageAccount -ResourceGroupName STUDENTIDVM1 -SkuName Standard_LRS -Location eastus
+New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Location eastus
 # fill in a unique name for the storage account. Repeat the previous command when an errormessage is shown.
 ```
-
-### Exercise 1: Prepare infrastructure for Azure Network Watcher-based monitoring
-
-
-
-
-
-#### Task 1: Deploy Azure VMs, an Azure Storage account, and an Azure SQL Database instance by using Azure Resource Manager templates
-
-1. From the lab virtual machine, start Microsoft Edge, browse to the Azure portal at [**http://portal.azure.com**](http://portal.azure.com) and sign in by using a Microsoft account that has the Owner role in the target Azure subscription.
-
-1. In the Azure portal, navigate to the **Create a resource** blade.
-
-1. From the **Create a resource** blade, search Azure Marketplace for **Template deployment**.
-
-1. In the list of results, click **Template deployment (deploy using custom templates)**, and then click **Create**.
-
-1. On the **Custom deployment** blade, click the **Build your own template in the editor** link. If you do not see this link, click **Edit template** instead.
-
-1. From the **Edit template** blade, load the template file **az-101-03b_01_azuredeploy.json**. 
-
-   > **Note**: Review the content of the template and note that it defines deployment of an Azure VM, an Azure SQL Database, and an Azure Storage account.
-
-1. Save the template and return to the **Custom deployment** blade. 
-
-1. From the **Custom deployment** blade, navigate to the **Edit parameters** blade.
-
-1. From the **Edit parameters** blade, load the parameters file **az-101-03b_01_azuredeploy.parameters.json**. 
-
-1. Save the parameters and return to the **Custom deployment** blade. 
-
-1. From the **Custom deployment** blade, initiate a template deployment with the following settings:
-
-    - Subscription: the name of the subscription you intend to use in this lab
-
-    - Resource group: the name of a new resource group **az1010301b-RG**
-
-    - Location: the name of the Azure region which is closest to the lab location and where you can provision Azure VMs and Azure SQL Database
-
-    - Vm Size: **Standard_DS2_v2**
-
-    - Vm Name: **az1010301b-vm1**
-
-    - Admin Username: **Student**
-
-    - Admin Password: **Pa55w.rd1234**
-
-    - Virtual Network Name: **az1010301b-vnet1**
-
-    - Sql Login Name: **Student**
-
-    - Sql Login Password: **Pa55w.rd1234**
-
-    - Database Name: **az1010301b-db1**
-
-    - Sku Name: **Basic**
-
-    - Sku Tier: **Basic**
-
-   > **Note**: To identify VM sizes available in your subscription in a given region, run the following from Cloud Shell and review the values in the **Restriction** column (where &lt;location&gt; represents the target Azure region):
-   
-   ```pwsh
-   Get-AzComputeResourceSku | where {$_.Locations -icontains "<location>"} | Where-Object {($_.ResourceType -ilike "virtualMachines")}
-   ```
-   
-   > **Note**: To identify whether you can provision Azure SQL Database in a given region, run the following from Cloud Shell and ensure that the resulting **Status** is set to **Available** (where &lt;location&gt; represents the target Azure region):
-
-   ```pwsh
-   Get-AzSqlCapability -LocationName <regionname>
-   ```
-   
-   > **Note**: Do not wait for the deployment to complete but proceed to the next step. 
-
-1. In the Azure portal, navigate to the **Create a resource** blade.
-
-1. From the **Create a resource** blade, search Azure Marketplace for **Template deployment**.
-
-1. In the results, click **Template deployment (deploy using custom templates)**, and then click **Create**.
-
-1. On the **Custom deployment** blade, click the **Build your own template in the editor** link. If you do not see this link, click **Edit template** instead.
-
-1. From the **Edit template** blade, load the template file **az-101-03b_02_azuredeploy.json**. 
-
-   > **Note**: Review the content of the template and note that it defines deployment of an Azure VM.
-
-1. Save the template and return to the **Custom deployment** blade. 
-
-1. From the **Custom deployment** blade, navigate to the **Edit parameters** blade.
-
-1. From the **Edit parameters** blade, load the parameters file **az-101-03b_02_azuredeploy.parameters.json**. 
-
-1. Save the parameters and return to the **Custom deployment** blade. 
-
-1. From the **Custom deployment** blade, initiate a template deployment with the following settings:
-
-    - Subscription: the name of the subscription you are using in this lab
-
-    - Resource group: the name of a new resource group **az1010302b-RG**
-
-    - Location: the name of an Azure region where you can provision Azure VMs, but which is **different** from the one you selected during previous deployment, 
-
-    - Vm Size: **Standard_DS2_v2**
-
-    - Vm Name: **az1010302b-vm2**
-
-    - Admin Username: **Student**
-
-    - Admin Password: **Pa55w.rd1234**
-
-    - Virtual Network Name: **az1010302b-vnet2**
-
-   > **Note**: Make sure to choose a different Azure region for this deployment
-
-   > **Note**: Do not wait for the deployment to complete but proceed to the next step. 
-
 
 #### Task 2: Enable Azure Network Watcher service
 
@@ -394,108 +284,6 @@ The main tasks for this exercise are as follows:
 
 1. Verify that the result identifies the next hop type as **Internet**
 
-
-#### Task 3: Test network connectivity to an Azure SQL Database by using Network Watcher
-
-1. From the Azure Portal, start a PowerShell session in the Cloud Shell. 
-
-1. In the Cloud Shell pane, run the following command to identify the IP address of the Azure SQL Database server you provisioned in the previous exercise:
-
-   ```pwsh
-   [System.Net.Dns]::GetHostAddresses($(Get-AzSqlServer -ResourceGroupName 'az1010301b-RG')[0].FullyQualifiedDomainName).IPAddressToString
-   ```
-
-1. Note the resulting string and, from the **Network Watcher - Connection troubleshoot** blade, initiate a check with the following settings:
-
-    - Source: 
-
-        - Subscription: the name of the Azure subscription you are using in this lab
-
-        - Resource group: **az1010301b-RG**
-
-        - Source type: **Virtual machine**
-
-        - Virtual machine: **az1010301b-vm1**
-
-    - Destination: **Specify manually**
-
-        - URI, FQDN or IPv4: the IP address of the Azure SQL Database server you identified in the previous step of this task
-
-    - Probe Settings:
-
-        - Protocol: **TCP**
-
-        - Destination port: **1433**
-
-    - Advanced settings:
-
-        - Source port: blank
-
-1. Wait until results of the connectivity check are returned and verify that the status is **Reachable**. Review the network path and note that the connection was direct, with no intermediate hops in between the VMs, with low latency. 
-
-    > **Note**: The connection takes place over the service endpoint you created in the previous exercise. To verify this, you will use the **Next hop** tool of Network Watcher.
-
-1. From the **Network Watcher - Connection troubleshoot** blade, navigate to the **Network Watcher - Next hop** blade and test next hop with the following settings:
-
-    - Subscription: the name of the Azure subscription you are using in this lab
-
-    - Resource group: **az1010301b-RG**
-
-    - Virtual machine: **az1010301b-vm1**
-
-    - Network interface: **az1010301b-nic1**
-
-    - Source IP address: **10.203.0.4**
-
-    - Destination IP address: the IP address of the Azure SQL Database server you identified earlier in this task
-
-1. Verify that the result identifies the next hop type as **VirtualNetworkServiceEndpoint**
-
-1. From the **Network Watcher - Connection troubleshoot** blade, initiate a check with the following settings:
-
-    - Source: 
-
-        - Subscription: the name of the Azure subscription you are using in this lab
-
-        - Resource group: **az1010302b-RG**
-
-        - Source type: **Virtual machine**
-
-        - Virtual machine: **az1010302b-vm2**
-
-    - Destination: **Specify manually**
-
-        - URI, FQDN or IPv4: the IP address of the Azure SQL Database server you identified earlier in this task
-
-    - Probe Settings:
-
-        - Protocol: **TCP**
-
-        - Destination port: **1433**
-
-    - Advanced settings:
-
-        - Source port: blank
-
-1. Wait until results of the connectivity check are returned and verify that the status is **Reachable**. 
-
-    > **Note**: The connection is successful, however it is established over Internet. To verify this, you will use again the **Next hop** tool of Network Watcher.
-
-1. From the **Network Watcher - Connection troubleshoot** blade, navigate to the **Network Watcher - Next hop** blade and test next hop with the following settings:
-
-    - Subscription: the name of the Azure subscription you are using in this lab
-
-    - Resource group: **az1010302b-RG**
-
-    - Virtual machine: **az1010302b-vm2**
-
-    - Network interface: **az1010302b-nic1**
-
-    - Source IP address: **10.203.16.4**
-
-    - Destination IP address: the IP address of the Azure SQL Database server you identified earlier in this task
-
-1. Verify that the result identifies the next hop type as **Internet**
 
 
 > **Result**: After you completed this exercise, you have used Azure Network Watcher to test network connectivity to an Azure VM via virtual network peering, network connectivity to Azure Storage, and network connectivity to Azure SQL Database.
