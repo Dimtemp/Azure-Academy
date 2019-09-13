@@ -4,8 +4,14 @@
   
 Adatum Corporation wants to implement Azure VM-hosted web workloads and facilitate their management for its subsidiary Contoso Corporation in a highly available manner by leveraging load balancing and Network Address Translation (NAT) features of Azure Load Balancer
 
+| Resource | Location | Availability set | 
+|----------|----------|------------------|
+| VM1 | Europe | SetA | LB1 |
+| VM2 | Europe | SetA | LB1 |
+| VM3 | East US | SetB | LB2 |
+| VM4 | East US | SetB | LB2 |
 
-### Exercise 0: Deploy Azure VMs by using Azure Resource Manager templates
+#### Task 1: Deploy Azure VMs by using Azure Resource Manager templates
 
 ```powershell
 #init
@@ -19,8 +25,6 @@ $cred = New-Object System.Management.Automation.PSCredential ($username, $secure
 New-AzResourceGroup -location westeurope -name $studentid
 New-AzVM -name "$studentid"VM1 -credential $cred -location westeurope -Addressprefix '10.1.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.1.0.0/24'
 New-AzVM -name "$studentid"VM2 -credential $cred -location eastus -Addressprefix '10.2.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.2.0.0/24'
-New-AzStorageAccount -ResourceGroupName $studentid -SkuName Standard_LRS -Location eastus
-# fill in a unique name for the storage account. Repeat the previous command when an errormessage is shown.
 ```
 
 
