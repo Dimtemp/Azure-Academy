@@ -2,15 +2,10 @@
 
 ### Scenario
   
-Adatum Corporation wants to integrate its Active Directory with Azure Active Directory
+Adatum Corporation wants to integrate its Active Directory with Azure Active Directory. You will install Azure AD Connect on a domain controller to synchronize Active Directory with Azure Active Directory.
 
 
-### Exercise 1: Deploy an Azure VM hosting an Active Directory domain controller
-#### Task 1: Identify an available DNS name for an Azure VM deployment
-
-1. From the Azure Portal, start a PowerShell session in the Cloud Shell pane.
-
-#### Task 2: Deploy an Azure VM hosting an Active Directory domain controller by using an Azure Resource Manager template
+#### Task 1: Deploy an Azure VM hosting an Active Directory domain controller by using an Azure Resource Manager template
 
 1. Open a web browser and browse to the GitHub Azure QuickStart Templates page at  [**https://github.com/Azure/azure-quickstart-templates**](https://github.com/Azure/azure-quickstart-templates).
 
@@ -20,7 +15,7 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
 
 1. A new blade opens. Initiate a template deployment with the following settings:
 
-    - Resource group: Create new: **<YOURNAME>**
+    - Resource group: Create new: **<STUDENTID>**
 
     - Admin Username: **Student**
 
@@ -34,7 +29,6 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
 
    > **Note**: Do not wait for the deployment to complete but proceed to the next task. You will use the virtual machine deployed in this task in the third exercise of this lab.
 
-> **Result**: After you completed this task, you have initiated deployment of an Azure VM that will host an Active Directory domain controller by using an Azure Resource Manager template
 
 
 #### Task 2: Create an Azure Active Directory (AD) tenant
@@ -56,7 +50,7 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
    > **Note**: The green check mark in the **Initial domain name** text box will indicate whether the domain name you typed in is valid and unique. 
 
 
-#### Task 2: Add a custom DNS name to the new Azure AD tenant
+#### Task 3: Add a custom DNS name to the new Azure AD tenant
   
 1. In the Azure portal, set the **Directory + subscription** filter to the newly created Azure AD tenant.
 
@@ -77,7 +71,7 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
    > **Note**: You will not be able to complete the validation process because you do not own the **adatum.com** DNS domain name. This will not prevent you from synchronizing the **adatum.com** Active Directory domain with the Azure AD tenant. You will use for this purpose the default primary DNS name of the Azure AD tenant (the name ending with the **onmicrosoft.com** suffix), which you identified earlier in this task. However, keep in mind that, as a result, the DNS domain name of the Active Directory domain and the DNS name of the Azure AD tenant will differ. This means that Adatum users will need to use different names when signing in to the Active Directory domain and when signing in to Azure AD tenant.
 
 
-#### Task 3: Create an Azure AD user with the Global Administrator role
+#### Task 4: Create an Azure AD user with the Global Administrator role
 
 1. In the Azure portal, navigate to the **Users - All users** blade of the **AdatumSync** Azure AD tenant.
 
@@ -103,21 +97,22 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
 
 1. Sign out as **syncadmin** and close the InPrivate browser window.
 
-> **Result**: After you completed this exercise, you have created an Azure AD tenant, added a custom DNS name to the new Azure AD tenant, and created an Azure AD user with the Global Administrator role.
 
 
 
-#### Task 1: Configure Active Directory in preparation for directory synchronization
+#### Task 5: Configure Active Directory in preparation for directory synchronization
 
-   > **Note**: Before you start this task, ensure that the template deployment you started in Exercise 1 has completed.
+   > **Note**: Before you start this task, ensure that the template deployment you started in task 1 has completed.
   
 1. In the Azure portal, set the **Directory + subscription** filter back to the Azure AD tenant associated with the Azure subscription you used in the first exercise of this lab.
 
    > **Note**: The **Directory + subscription** filter appears to the left of the notification icon in the toolbar of the Azure portal 
 
-1. In the Azure portal, navigate to the **adVM** blade, displaying the properties of the Azure VM hosting an Active Directory domain controller that you deployed in the first exercise of this lab.
+1. In the Azure portal, navigate to **Resource Groups**, click **<STUDENTID>** resource group to open it, select the **adVM** virtual machine.
 
-1. From the **Overview** pane of the **adVM** blade, generate an RDP file and use it to connect to **adVM**.
+1. From the **Overview** pane of the **adVM** blade, identify it's public IP address.
+
+1. Connect to the VM using RDP.
 
 1. When prompted, authenticate by specifying the following credentials:
 
@@ -125,12 +120,11 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
 
     - Password: **Pa55w.rd1234**
 
-1. Within the Remote Desktop session to **adVM**, open the **Active Directory Administrative Center**.
+1. Within the Remote Desktop session, click Start, select Administrative Tools and open the **Active Directory Users and Computers**.
 
-1. From **Active Directory Administrative Center**, create a root level organizational unit named **ToSync**.
+1. From **Active Directory Users and Computers**, create a organizational unit named **ToSync**.
 
-
-1. From **Active Directory Administrative Center**, in the organizational unit **ToSync**, create a new user account with the following settings:
+1. From **Active Directory Users and Computers**, in the organizational unit **ToSync**, create a new user account with the following settings:
 
     - Full name: **aduser1**
 
@@ -143,13 +137,13 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
     - Other password options: **Password never expires**
 
 
-#### Task 2: Install Azure AD Connect
+#### Task 6: Install Azure AD Connect
 
-1. Within the RDP session to **adVM**, from Server Manager, disable temporarily **IE Enhanced Security Configuration**.
+1. Within the RDP session, open Server Manager, and disable **IE Enhanced Security Configuration**.
 
-1. Within the RDP session to **adVM**, start Internet Explorer and download **Azure AD Connect** from [**https://www.microsoft.com/en-us/download/details.aspx?id=47594**](https://www.microsoft.com/en-us/download/details.aspx?id=47594)
+1. Within the RDP session, start Internet Explorer and download **Azure AD Connect** from [**https://www.microsoft.com/en-us/download/details.aspx?id=47594**](https://www.microsoft.com/en-us/download/details.aspx?id=47594)
 
-1. Start **Microsoft Azure Active Directory Connect** wizard, accept the licensing terms, and, on the **Express Settings** page, select the **Customize** option.
+1. Start **Microsoft Azure Active Directory Connect** wizard, accept the licensing terms, and, on the Express Settings page, select the **Customize** option.
 
 1. On the **Install required components** page, leave all optional configuration options deselected and start the installation.
 
@@ -182,9 +176,9 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
 1. Close the Microsoft Azure Active Directory Connect window once the configuration is completed.
 
 
-#### Task 3: Verify directory synchronization
+#### Task 7: Verify directory synchronization
 
-1. Within the RDP session to **adVM**, start Internet Explorer, browse to the Azure portal at [**http://portal.azure.com**](http://portal.azure.com) and sign in by using the **syncadmin** account that you created in the previous exercise. 
+1. Within the RDP session, start Internet Explorer, browse to the Azure portal at [**http://portal.azure.com**](http://portal.azure.com) and sign in by using the **syncadmin** account that you created in the previous exercise. 
 
 1. In the Azure portal, navigate to the **AdatumSync - Overview** blade.
 
@@ -194,7 +188,7 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
 
 1. From the **Users - All users** blade, display the **aduser1 - Profile** blade. Note that the **Department** attribute is not set.
 
-1. Within the RDP session to **adVM**, switch to the **Active Directory Administrative Center**, open the window displaying properties of the **aduser1** user account, and set the value of its **Department** attribute to **Sales**.
+1. Within the RDP session to **adVM**, switch to **Active Directory Users and Computers**, open the window displaying properties of the **aduser1** user account, and set the value of its **Department** attribute to **Sales**.
 
 1. Within the RDP session to **adVM**, start **Windows PowerShell** as Administrator.
 
@@ -213,5 +207,11 @@ Adatum Corporation wants to integrate its Active Directory with Azure Active Dir
 1. From the **Users - All users** blade, display the **aduser1 - Profile** blade. Note that the **Department** attribute is now set to **Sales**.
 
    > **Note**: You might need to wait for another minute and refresh the page again if the **Department** attribute remains not set.
+
+
+> **Result**: After you completed this task, you have initiated deployment of an Azure VM that will host an Active Directory domain controller by using an Azure Resource Manager template
+
+> **Result**: After you completed this exercise, you have created an Azure AD tenant, added a custom DNS name to the new Azure AD tenant, and created an Azure AD user with the Global Administrator role.
+
 
 > **Result**: After you completed this exercise, you have configured Active Directory in preparation for directory synchronization, installed Azure AD Connect, and verified directory synchronization.
