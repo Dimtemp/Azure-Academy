@@ -1,51 +1,28 @@
----
-lab:
-    title: 'Azure Network Watcher'
-    module: 'Module 06 - Monitoring'
----
-
 # Lab: Use Azure Network Watcher for monitoring and troubleshooting network connectivity
-
-All tasks in this lab are performed from the Azure portal (including a PowerShell Cloud Shell session)  
-
-   > **Note**: When not using Cloud Shell, the lab virtual machine must have the Azure PowerShell 1.2.0 module (or newer) installed[https://docs.microsoft.com/en-us/powershell/azure/install-az-ps](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps)
-
-Lab files: 
-
--  **Labfiles\\Module_06\\Network_Watcher\\az-101-03b_01_azuredeploy.json**
-
--  **Labfiles\\Module_06\\Network_Watcher\\az-101-03b_02_azuredeploy.json**
-
--  **Labfiles\\Module_06\\Network_Watcher\\az-101-03b_01_azuredeploy.parameters.json**
-
--  **Labfiles\\Module_06\\Network_Watcher\\az-101-03b_02_azuredeploy.parameters.json**
-
 
 ### Scenario
   
 Adatum Corporation wants to monitor Azure virtual network connectivity by using Azure Network Watcher.
 
+VNET1: VM1 in West Europe
+VNET2: VM2 in North Europe
+Storage Account in East US
 
-### Objectives
-  
-After completing this lab, you will be able to:
-
--  Deploy Azure VMs, Azure storage accounts, and Azure SQL Database instances by using Azure Resource Manager templates
-
--  Use Azure Network Watcher to monitor network connectivity
-
+```powershell
+$cred = Get-Credential -UserName student
+# fill in Pa55w.rd1234 as the password
+New-AzResourceGroup -location westeurope -name STUDENTID
+New-AzVM -name STUDENTIDVM1 -credential $cred -location westeurope 
+New-AzVM -name STUDENTIDVM2 -credential $cred -location northeurope
+# fill in student as the username and Pa55w.rd1234 as the password
+New-AzStorageAccount -ResourceGroupName STUDENTIDVM1 -SkuName Standard_LRS -Location eastus
+# fill in a unique name for the storage account. Repeat the previous command when an errormessage is shown.
+```
 
 ### Exercise 1: Prepare infrastructure for Azure Network Watcher-based monitoring
-  
-The main tasks for this exercise are as follows:
 
-1. Deploy Azure VMs, an Azure Storage account, and an Azure SQL Database instance by using an Azure Resource Manager template
 
-1. Enable Azure Network Watcher service
 
-1. Establish peering between Azure virtual networks
-
-1. Establish service endpoints to an Azure Storage account and Azure SQL Database instance
 
 
 #### Task 1: Deploy Azure VMs, an Azure Storage account, and an Azure SQL Database instance by using Azure Resource Manager templates
@@ -522,3 +499,14 @@ The main tasks for this exercise are as follows:
 
 
 > **Result**: After you completed this exercise, you have used Azure Network Watcher to test network connectivity to an Azure VM via virtual network peering, network connectivity to Azure Storage, and network connectivity to Azure SQL Database.
+
+
+### Objectives
+  
+After completing this lab, you will be able to:
+
+-  Deploy Azure VMs, Azure storage accounts, and Azure SQL Database instances by using Azure Resource Manager templates
+
+-  Use Azure Network Watcher to monitor network connectivity
+
+
