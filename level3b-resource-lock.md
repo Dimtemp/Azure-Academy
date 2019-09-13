@@ -1,15 +1,22 @@
-
-### Exercise: Implement Azure resource locks
+### Lab: Implement Azure resource locks
 
 #### Task 1: Create resource group-level locks to prevent accidental changes
 
-1. In the Azure portal, navigate to the **az1000101b-RG** resource group blade.
+1. In the Azure portal, click **Storage Accounts**.
 
-1. From the **az1000101b-RG** resource group blade, display the **az1000101b-RG - Locks** blade.
+1. Click **Add** to create a new storage account.
 
-1. From the **az1000101b-RG - Locks** blade, add a lock with the following settings:
+1. navigate to **Resource Groups**.
 
-    - Lock name: **az1000101b-roLock**
+1. Create a new resource group with the name **<STUDENTID>**.
+
+1. After the resource group has been created, optionally refresh the page, and open the resource group.
+
+1. From the resource group, select Locks.
+
+1. Add a lock with the following settings:
+
+    - Lock name: **myreadonlylock**
 
     - Lock type: **Read-only**
 
