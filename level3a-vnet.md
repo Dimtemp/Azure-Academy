@@ -6,8 +6,8 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 
 |ResourceGroup|VNet|VM|IP Address|Location|
 |-------------|----|--|----------|--------|
-|StudentID1|VNET1|VM1|10.1.0.4|westeurope|
-|StudentID2|VNET2|VM2|10.2.0.4|east us|
+|StudentID1|VNET1|VM1|10.1.0.4|West Europe|
+|StudentID2|VNET2|VM2|10.2.0.4|East US|
 
 
 
@@ -19,10 +19,12 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 
 1. Create a virtual network using this information:
 
-- Name: STUDENTID-VNET1
+- Name: VNET1
 - Address space: 10.1.0.0/16
-- Resource group, Create new: STUDENTID
+- Resource group, Create new: StudentID1 (for example Peter1)
+- Location: West Europe
 - Address range: 10.1.0.0/24
+- Leave all other items at their default values.
 
 1. Click Create to create the virtual network.
 
@@ -30,23 +32,37 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 
 1. In the Azure Portal, start a Cloud Shell
 
-1. 
+1. Run the following commands:
 
 ```powershell
-$Name = 'STUDENTID'
-New-AzResourceGroup -Name "$($Name)2" -Location westeurope
-New-AzVirtualNetwork -Name "$($Name)2" -Location westeurope -ResourceGroupName "$($Name)2" -Addressprefix '10.2.0.0/16'
+$id = 'StudentID'   # replace this with your own, unique ID!
+New-AzResourceGroup -Name "$($id)2" -Location westus
+New-AzVirtualNetwork -Name "$($id)2" -Location westus -ResourceGroupName "$($id)2" -Addressprefix '10.2.0.0/16'
 ```
 
+
+#### Task 2: Create virtual machines in both virtual networks
+
+1. With the Cloud Shell still open, run the following commands:
+
+```powershell
+$username = 'Student'
+$password = 'Pa55w.rd1234'
+$id = 'StudentID'   # replace this with your own, unique ID!
+
+#run
+$securePassword = ConvertTo-SecureString $password  -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+
+New-AzVM -Name VM1 -Credential $cred -ResourceGroupName Peter1 -VirtualNetworkName vnet1 -Location westeurope
+New-AzVM -Name VM2 -Credential $cred -ResourceGroupName Peter1 -VirtualNetworkName vnet1 -Location westus
+
+New-AzVM -name "$id"VM2 -credential $cred -location eastus -Addressprefix '10.2.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.2.0.0/24'
+
+```
+
+
 > **Note**: Do not wait for the deployment to complete but proceed to the next task. You will use the network and the virtual machines included in this deployment in the second exercise of this lab.
-
-
-#### Task 2: Create the second virtual network in the same region hosting a single Azure VM by using an Azure Resource Manager template
-
-1. In the Azure portal, navigate to the **Create a resource** blade.
-
-1. From the **Create a resource** blade, search Azure Marketplace for **Template deployment**.
-
 
    > **Note**: Do not wait for the deployment to complete but proceed to the next task. You will use the network and the virtual machines included in this deployment in the second exercise of this lab.
 
