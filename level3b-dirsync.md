@@ -1,104 +1,43 @@
 # Lab: Implement Directory Synchronization
-  
-   > **Note**: When not using Cloud Shell, the lab virtual machine must have the Azure PowerShell 1.2.0 module (or newer) installed [https://docs.microsoft.com/en-us/powershell/azure/install-az-ps](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps)
-
-Lab files: none
 
 ### Scenario
   
 Adatum Corporation wants to integrate its Active Directory with Azure Active Directory
 
 
-### Objectives
-  
- After completing this lab, you will be able to:
-
-- Deploy an Azure VM hosting an Active Directory domain controller
-
-- Create and configure an Azure Active Directory tenant
-
-- Synchronize Active Directory forest with an Azure Active Directory tenant
-
-
 ### Exercise 1: Deploy an Azure VM hosting an Active Directory domain controller
-
-The main tasks for this exercise are as follows:
-
-1. Identify an available DNS name for an Azure VM deployment
-
-1. Deploy an Azure VM hosting an Active Directory domain controller by using an Azure Resource Manager template
-
-
 #### Task 1: Identify an available DNS name for an Azure VM deployment
-
-1. From the lab virtual machine, start Microsoft Edge, browse to the Azure portal at [**http://portal.azure.com**](http://portal.azure.com) and sign in by using a Microsoft account that has the Owner role in the Azure subscription you intend to use in this lab and is a Global Administrator of the Azure AD tenant associated with that subscription.
 
 1. From the Azure Portal, start a PowerShell session in the Cloud Shell pane.
 
-   > **Note**: If this is the first time you are launching the Cloud Shell in the current Azure subscription, you will be asked to create an Azure file share to persist Cloud Shell files. If so, accept the defaults, which will result in creation of a storage account in an automatically generated resource group.
-
-1. In the Cloud Shell pane, run the following command, substituting the placeholder &lt;custom-label&gt; with any string which is likely to be unique and the placeholder &lt;location&gt; with the name of the Azure region into which you want to deploy the Azure VM that will host an Active Directory domain controller.
-
-   > **Note**: To identify Azure regions where you can provision Azure VMs, refer to [**https://azure.microsoft.com/en-us/regions/offers/**](https://azure.microsoft.com/en-us/regions/offers/)
-
-   ```pwsh
-   Test-AzDnsAvailability -DomainNameLabel <custom-label> -Location '<location>'
-   ```
-
-1. Verify that the command returned **True**. If not, rerun the same command with a different value of the &lt;custom-label&gt; until the command returns **True**. 
-
-1. Note the value of the &lt;custom-label&gt; that resulted in the successful outcome. You will need it in the next task
-
-
 #### Task 2: Deploy an Azure VM hosting an Active Directory domain controller by using an Azure Resource Manager template
 
-1. From the lab virtual machine, start another instance of Microsoft Edge, browse to the GitHub Azure QuickStart Templates page at  [**https://github.com/Azure/azure-quickstart-templates**](https://github.com/Azure/azure-quickstart-templates).
+1. Open a web browser and browse to the GitHub Azure QuickStart Templates page at  [**https://github.com/Azure/azure-quickstart-templates**](https://github.com/Azure/azure-quickstart-templates).
 
 1. On the Azure Quickstart Templates page, click **active-directory-new-domain**.
 
-1. On the **Create a new Windows VM and create a new AD Forest, Domain and DC** page, right-click **Deploy to Azure**, and click **Open in new tab**.
+1. Click **Deploy to Azure**.
 
-1. On the **Create an Azure VM with a new AD Forest** blade, initiate a template deployment with the following settings:
+1. A new blade opens. Initiate a template deployment with the following settings:
 
-    - Subscription: the name of the subscription you are using in this lab
-
-    - Resource group: the name of a new resource group **az1000501-RG**
-
-    - Location: the name of the Azure region which you used in the previous task
+    - Resource group: Create new: **<YOURNAME>**
 
     - Admin Username: **Student**
 
     - Admin Password: **Pa55w.rd1234**
 
-    - Domain Name: **adatum.com**
+    - Domain Name: **<YOURNAME>.com**, for example: peter.com
 
-    - Dns Prefix: the &lt;custom-label&gt; you identified in the previous task
+    - Dns Prefix: <STUDENTID><6 digit random number>, for example: Peter732538. This name needs to be unique.
     
-    - VM Size: **Standard_D2s_v3**
+    - for all other items: accept the default value
 
-    - _artifacts Location: accept the default value
+   > **Note**: Do not wait for the deployment to complete but proceed to the next task. You will use the virtual machine deployed in this task in the third exercise of this lab.
 
-    - _artifacts Location Sas Token: leave blank
-
-    - Location: accept the default value
-
-   > **Note**: Do not wait for the deployment to complete but proceed to the next exercise. You will use the virtual machine deployed in this task in the third exercise of this lab.
-
-> **Result**: After you completed this exercise, you have initiated deployment of an Azure VM that will host an Active Directory domain controller by using an Azure Resource Manager template
+> **Result**: After you completed this task, you have initiated deployment of an Azure VM that will host an Active Directory domain controller by using an Azure Resource Manager template
 
 
-### Exercise 2: Create and configure an Azure Active Directory tenant
-
-The main tasks for this exercise are as follows:
-
-1. Create an Azure Active Directory (AD) tenant
-
-1. Add a custom DNS name to the new Azure AD tenant
-
-1. Create an Azure AD user with the Global Administrator role
-
-
-#### Task 1: Create an Azure Active Directory (AD) tenant
+#### Task 2: Create an Azure Active Directory (AD) tenant
 
 1. In the Azure portal, navigate to the **Create a resource** blade. 
 
@@ -166,16 +105,6 @@ The main tasks for this exercise are as follows:
 
 > **Result**: After you completed this exercise, you have created an Azure AD tenant, added a custom DNS name to the new Azure AD tenant, and created an Azure AD user with the Global Administrator role.
 
-
-### Exercise 3: Synchronize Active Directory forest with an Azure Active Directory tenant
-
-The main tasks for this exercise are as follows:
-
-1. Configure Active Directory in preparation for directory synchronization
-
-1. Install Azure AD Connect
-
-1. Verify directory synchronization
 
 
 #### Task 1: Configure Active Directory in preparation for directory synchronization
@@ -286,80 +215,3 @@ The main tasks for this exercise are as follows:
    > **Note**: You might need to wait for another minute and refresh the page again if the **Department** attribute remains not set.
 
 > **Result**: After you completed this exercise, you have configured Active Directory in preparation for directory synchronization, installed Azure AD Connect, and verified directory synchronization.
-
-
-## Exercise 4: Remove lab resources
-
-#### Task 1: Open Cloud Shell
-
-1. At the top of the portal, click the **Cloud Shell** icon to open the Cloud Shell pane.
-
-1. At the Cloud Shell interface, select **Bash**.
-
-1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to list all resource groups you created in this lab:
-
-   ```sh
-   az group list --query "[?starts_with(name,'az1000')].name" --output tsv
-   ```
-
-1. Verify that the output contains only the resource groups you created in this lab. These groups will be deleted in the next task.
-
-#### Task 2: Delete resource groups
-
-1. At the **Cloud Shell** command prompt, type in the following command and press **Enter** to delete the resource groups you created in this lab
-
-   ```sh
-   az group list --query "[?starts_with(name,'az1000')].name" --output tsv | xargs -L1 bash -c 'az group delete --name $0 --no-wait --yes'
-   ```
-
-1. Close the **Cloud Shell** prompt at the bottom of the portal.
-
-#### Task 3: Delete the Azure AD tenant.
-
-1. Start Windows PowerShell as Administrator on the lab VM. 
-
-1. From the Windows PowerShell console on the lab VM, install the MsOnline PowerShell module by running the following (when prompted, in the NuGet provider is required to continue dialog box, click **Yes**):
-
-   ```pwsh
-   Install-Module MsOnline -Force
-   ```
-   
-1. From the Windows PowerShell console on the lab VM, connect to the AdatumSync Azure AD tenant by running the following (when prompted, sign in with the SyncAdmin credentials):
-
-   ```pwsh
-   Connect-MsolService
-   ```
-
-1. From the Windows PowerShell console on the lab VM, disable the Azure AD Connect synchronization by running the following:
-
-   ```pwsh
-   Set-MsolDirSyncEnabled -EnableDirSync $false -Force
-   ```
-
-1. From the Windows PowerShell console on the lab VM, verify that the operation was successful by running the following:
-
-   ```pwsh
-   (Get-MSOLCompanyInformation).DirectorySynchronizationEnabled 
-   ```   
-
-1. On the lab VM, sign out from the Azure portal and close the Microsoft Edge window. 
-
-1. From the lab VM, start Microsoft Edge, navigate to the Azure portal, and sign in by using the SyncAdmin credentials. 
-
-1. In the Azure portal, navigate to the **Users - All users** blade of the AdatumSync Azure AD tenant and delete all users with the exception of the AdatumSync account.
-
-> **Note**: You might need to wait a few hours before you can complete this step.
-
-1. Navigate to the AdatumSync - Overview blade and click **Properties**.
-
-1. On the **Properties** blade of Azure Active Directory click **Yes** in the **Access management for Azure resource** section and then click **Save**.
-
-1. Sign out from the Azure portal and sign back in by using the SyncAdmin credentials. 
-
-1. Navigate to the **AdatumSync - Overview** blade and delete the Azure AD tenant by clicking **Delete directory**.
-
-1. On the **Delete directory 'AdatumSync'?** blade, click **Delete**.
-
-> **Note**: For any additional  information regarding this task, refer to https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-delete-howto  
-
-> **Result**: In this exercise, you removed the resources used in this lab.
