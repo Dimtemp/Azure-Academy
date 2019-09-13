@@ -4,9 +4,11 @@
   
 Adatum Corporation wants to monitor Azure virtual network connectivity by using Azure Network Watcher.
 
-- VNET1: VM1 in West Europe
-- VNET2: VM2 in North Europe
-- Storage Account in East US
+| Resource | Location      |
+|----------|---------------|
+| VM1      | West Europe   |
+| VM2      | East US       |
+| Storage  | East US       |
 
 
 ### Exercise 1: Prepare infrastructure for Azure Network Watcher-based monitoring
@@ -17,8 +19,8 @@ Adatum Corporation wants to monitor Azure virtual network connectivity by using 
 $cred = Get-Credential -UserName student
 # fill in Pa55w.rd1234 as the password
 New-AzResourceGroup -location westeurope -name STUDENTID
-New-AzVM -name STUDENTIDVM1 -credential $cred -location westeurope
-New-AzVM -name STUDENTIDVM2 -credential $cred -location northeurope
+New-AzVM -name STUDENTIDVM1 -credential $cred -location westeurope -Addressprefix '10.1.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.1.0.0/24'
+New-AzVM -name STUDENTIDVM2 -credential $cred -location eastus -Addressprefix '10.2.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.2.0.0/24'
 # fill in student as the username and Pa55w.rd1234 as the password
 New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Location eastus
 # fill in a unique name for the storage account. Repeat the previous command when an errormessage is shown.
@@ -33,23 +35,19 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 
 #### Task 3: Establish peering between Azure virtual networks
 
-   > **Note**: Before you start this task, ensure that the template deployment you started in the first task of this exercise has completed. 
+   > **Note**: Before you start this task, ensure that the deployment you started in the previous task has completed. 
 
 1. In the Azure portal, navigate to the **az1010301b-vnet1** virtual network blade.
 
-1. From the **az1010301b-vnet1** virtual network blade, display the **az1010301b-vnet1 - Peerings** blade.
+1. Select **Peerings**.
 
-1. From the **az1010301b-vnet1 - Peerings** blade, create a VNet peering with the following settings:
+1. Create a VNet peering with the following settings:
 
-    - Name: **az1010301b-vnet1-to-az1010302b-vnet2**
-
-    - Virtual network deployment model: **Resource manager**
-
-    - Subscription: the name of the Azure subscription you are using in this lab
+    - Name: **europe-to-usa**
 
     - Virtual network: **az1010302b-vnet2**
 
-    - Name of peering from az1010302b-vnet2 to az1010301b-vnet1: **az1010302b-vnet2-to-az1010301b-vnet1**
+    - Name of peering from az1010302b-vnet2 to az1010301b-vnet1: **usa-to-europe**
 
     - Allow virtual network access: **Enabled**
 
@@ -59,21 +57,16 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 
     > **Note**: The Azure portal allows you to configure both directions of the peering simultaneously. When using other management tools, each direction must be configured independently. 
 
-#### Task 4: Establish service endpoints to an Azure Storage account and Azure SQL Database instance
+
+#### Task 4: Establish service endpoints to an Azure Storage account
 
 1. In the Azure portal, navigate to the **az1010301b-vnet1** virtual network blade.
 
-1. From the **az1010301b-vnet1** virtual network blade, display the **Service endpoints** blade.
+1. Select **Service endpoints**.
 
-1. From the **az1010301b-vnet1 - Service endpoints** blade, add a service endpoint with the following settings:
+1. Add a service endpoint with the following settings:
 
     - Service: **Microsoft.Storage**
-
-    - Subnets: **subnet0**
-
-1. Repeat the step to create a second service endpoint:
-
-    - Service: **Microsoft.Sql**
 
     - Subnets: **subnet0**
 
@@ -89,7 +82,7 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 
     - Virtual networks: 
 
-        - VIRTUAL NETWORK: **az1010301b-vnet1**
+        - VIRTUAL NETWORK: **europe**
 
             - SUBNET: **subnet0**
 
