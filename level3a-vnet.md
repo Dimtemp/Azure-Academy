@@ -4,8 +4,8 @@
 
 Adatum Corporation wants to implement connectivity between Azure virtual networks in its Azure subscription. 
 
-|-|-|
 |ResourceGroup|VNet|VM|IP Address|Location|
+|-------------|----|--|----------|--------|
 |StudentID1|VNET1|VM1|10.1.0.4|westeurope|
 |StudentID2|VNET2|VM2|10.2.0.4|east us|
 
