@@ -4,9 +4,9 @@
   
 Adatum Corporation wants to monitor Azure virtual network connectivity by using Azure Network Watcher.
 
-VNET1: VM1 in West Europe
-VNET2: VM2 in North Europe
-Storage Account in East US
+- VNET1: VM1 in West Europe
+- VNET2: VM2 in North Europe
+- Storage Account in East US
 
 ```powershell
 $cred = Get-Credential -UserName student
