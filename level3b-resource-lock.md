@@ -1,16 +1,27 @@
 ### Lab: Implement Azure resource locks
 
-#### Task 1: Create resource group-level locks to prevent accidental changes
+Scenario: we're going to create two storage accounts, each in it's own resource groups. One resource group will be locked. It's resources can only be viewed, not changed.
 
-1. In the Azure portal, click **Storage Accounts**.
 
-1. Click **Add** to create a new storage account.
+#### Task 1: Create resources
 
-1. navigate to **Resource Groups**.
+1. In the Azure portal, open the Cloud Shell.
 
-1. Create a new resource group with the name **<STUDENTID>**.
+1. Verify the Cloud Shell is set to **PowerShell**, not bash.
 
-1. After the resource group has been created, optionally refresh the page, and open the resource group.
+1. We need two resource groups with each a storage account. Storage account names need to be globally unique. So when entering the final two command's, specify a name that should be globally unique (for example Peter82634). Enter the following command's in the Cloud Shell.
+
+```powershell
+New-AzResourceGroup -Name <STUDENTID>1 -Location westeurope
+New-AzResourceGroup -Name <STUDENTID>2 -Location westeurope
+New-AzStorageAccount -ResourceGroupName <STUDENTID>1 -SkuName Standard_LRS -Location westeurope
+New-AzStorageAccount -ResourceGroupName <STUDENTID>2 -SkuName Standard_LRS -Location westeurope
+```
+
+
+#### Task 2: Set resource group-level locks to prevent accidental changes
+
+1. After the resources have been created, optionally refresh the page, and open the **<STUDENTID>1** resource group.
 
 1. From the resource group, select Locks.
 
@@ -21,9 +32,9 @@
     - Lock type: **Read-only**
 
 
-#### Task 2: Validate functionality of the resource group-level locks
+#### Task 3: Validate functionality of the resource group-level locks
 
-1. In the Azure portal, navigate to the **az1000102b-vm1** virtual machine blade.
+1. In the Azure portal, navigate to the **<STUDENTID>2** virtual machine blade.
 
 1. From the **az1000102b-vm1** virtual machine blade, navigate to the **az1000102b-vm1 - Tags** blade.
 
