@@ -2,7 +2,7 @@
 
 ### Scenario
   
-Adatum Corporation wants to implement service chaining between Azure virtual networks in its Azure subscription. 
+Adatum Corporation wants to implement connectivity between Azure virtual networks in its Azure subscription. 
 
 
 ### Objectives
