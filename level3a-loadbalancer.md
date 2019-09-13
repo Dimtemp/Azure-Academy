@@ -6,12 +6,22 @@ Adatum Corporation wants to implement Azure VM-hosted web workloads and facilita
 
 
 ### Exercise 0: Deploy Azure VMs by using Azure Resource Manager templates
-  
-The main tasks for this exercise are as follows:
 
-1. Deploy management Azure VMs running Windows Server 2016 Datacenter with the Web Server (IIS) role installed into an availability set in the first Azure region by using an Azure Resource Manager template
+```powershell
+#init
+$username = 'Student'
+$password = 'Pa55w.rd1234'
+$studentid = 'STUDENTID'   # replace this with your own, unique ID!
 
-1. Deploy management Azure VMs running Windows Server 2016 Datacenter with the Web Server (IIS) role installed into an availability set in the second Azure region by using an Azure Resource Manager template
+#run
+$securePassword = ConvertTo-SecureString $password  -AsPlainText -Force
+$cred = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
+New-AzResourceGroup -location westeurope -name $studentid
+New-AzVM -name "$studentid"VM1 -credential $cred -location westeurope -Addressprefix '10.1.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.1.0.0/24'
+New-AzVM -name "$studentid"VM2 -credential $cred -location eastus -Addressprefix '10.2.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.2.0.0/24'
+New-AzStorageAccount -ResourceGroupName $studentid -SkuName Standard_LRS -Location eastus
+# fill in a unique name for the storage account. Repeat the previous command when an errormessage is shown.
+```
 
 
 #### Task 1: Deploy management Azure VMs running Windows Server 2016 Datacenter with the Web Server (IIS) role installed into an availability set in the first Azure region by using an Azure Resource Manager template
