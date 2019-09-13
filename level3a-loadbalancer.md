@@ -1,29 +1,8 @@
 # Lab: Load Balancer and Traffic Manager
 
-All tasks in this lab are performed from the Azure portal (including a PowerShell Cloud Shell session) except for Exercise 1 Task 3, which includes steps performed from a Remote Desktop session to an Azure VM
-
-Lab files: 
-
--  **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_azuredeploy.json**
-
--  **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_1_azuredeploy.parameters.json**
-
--  **Labfiles\\Module_08\\Load_Balancer_and_Traffic_Manager\\az-101-03_01_2_azuredeploy.parameters.json**
-
 ### Scenario
   
 Adatum Corporation wants to implement Azure VM-hosted web workloads and facilitate their management for its subsidiary Contoso Corporation in a highly available manner by leveraging load balancing and Network Address Translation (NAT) features of Azure Load Balancer
-
-
-### Objectives
-  
-After completing this lab, you will be able to:
-
--  Deploy Azure VMs by using Azure Resource Manager templates
-
--  Implement Azure Load Balancing
-
--  Implement Azure Traffic Manager load balancing
 
 
 ### Exercise 0: Deploy Azure VMs by using Azure Resource Manager templates
