@@ -10,23 +10,22 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 |StudentID2|VNET2|VM2|10.2.0.4|East US|
 
 
-
 #### Task 1: Create the first virtual network using the portal
 
-1. In the Azure portal, in the lefthand column, click Virtual Networks.
+1. In the Azure portal, in the lefthand column, click **Virtual Networks**.
 
 1. Click **Add** to open the **Create virtual network** wizard.
 
-1. Create a virtual network using this information:
+1. Create a virtual network using this information (leave all other settings at their default values):
 
 - Name: VNET1
 - Address space: 10.1.0.0/16
-- Resource group, Create new: StudentID1 (for example Peter1)
+- Resource group, Create new: StudentID1 (for example: Peter1)
 - Location: West Europe
 - Address range: 10.1.0.0/24
-- Leave all other items at their default values.
 
 1. Click Create to create the virtual network.
+
 
 #### Task 2: Create the second virtual network using PowerShell
 
@@ -35,20 +34,19 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 1. Run the following commands:
 
 ```powershell
-$id = 'StudentID'   # replace this with your own, unique ID!
+$id = 'StudentID'   # replace this with your own, unique ID, for example: $id = 'Peter'
 New-AzResourceGroup -Name "$($id)2" -Location westus
 New-AzVirtualNetwork -Name "$($id)2" -Location westus -ResourceGroupName "$($id)2" -Addressprefix '10.2.0.0/16'
 ```
 
 
-#### Task 2: Create virtual machines in both virtual networks
+#### Task 3: Create virtual machines in both virtual networks
 
 1. With the Cloud Shell still open, run the following commands:
 
 ```powershell
 $username = 'Student'
 $password = 'Pa55w.rd1234'
-$id = 'StudentID'   # replace this with your own, unique ID!
 
 #run
 $securePassword = ConvertTo-SecureString $password  -AsPlainText -Force
@@ -58,102 +56,94 @@ New-AzVM -Name VM1 -Credential $cred -ResourceGroupName Peter1 -VirtualNetworkNa
 New-AzVM -Name VM2 -Credential $cred -ResourceGroupName Peter1 -VirtualNetworkName vnet1 -Location westus
 
 New-AzVM -name "$id"VM2 -credential $cred -location eastus -Addressprefix '10.2.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.2.0.0/24'
-
 ```
 
-
-> **Note**: Do not wait for the deployment to complete but proceed to the next task. You will use the network and the virtual machines included in this deployment in the second exercise of this lab.
-
-   > **Note**: Do not wait for the deployment to complete but proceed to the next task. You will use the network and the virtual machines included in this deployment in the second exercise of this lab.
-
-> **Result**: After you completed this exercise, you have created two Azure virtual networks and initiated deployments of two Azure Virtual Machines.
+> **Result**: After you completed this task, you have created two Azure virtual networks and initiated deployments of two Azure Virtual Machines.
 
 
-#### Task 1: Verify non-connectivity
+#### Task 4: Configure Windows Firewall on the target Azure VM
 
-1. Log on to the first VM using RDP.
+1. In the Azure portal, in the lefthand column, click **Virtual Machines**.
 
-1. Open PowerShell.
+1. Select **VM1** to open the VM1 blade.
+
+1. Use the Connect button in the top to connect to the VM using RDP.
+
+1. Use the credentials you specified using the PowerShell command's in the previous task.
+
+1. When logged on to the VM, click Start, Administrative Tools and start **Windows Firewall with Advanced Security**.
+
+1. Select Inbound Rules and enable **File and Printer Sharing (Echo Request - ICMPv4-In)** inbound rule.
+
+1. Open a Windows PowerShell console.
 
 1. Run ipconfig.exe.
 
-1. Identify the private ip address. It should be starting with a 10.
+1. Identify the private ip address. It should be starting with 192.
 
-1. Log on to the second VM using RDP.
+1. Minimize the RDP session using the minimize button in the top bar of the RDP session.
 
-1. Open PowerShell.
 
-1. Run the following command, where <remoteip> should be replaced with the IP address you identified on the first VM.
+#### Task 5: Verify non-connectivity
+
+1. In the Azure portal, in the lefthand column, click **Virtual Machines**.
+
+1. Select **VM2** to open the VM1 blade.
+
+1. Use the Connect button in the top to connect to the VM using RDP.
+
+1. Use the credentials you specified using the PowerShell command's in the previous task.
+
+1. When logged on to the VM, open a Windows PowerShell console.
+
+1. Ping the first VM using the following command, where <remoteip> should be replaced with the IP address you identified on the first VM.
   ```console
   ping <remoteip>
   ```
 
 1. For example:
   ```console
-  ping 10.1.0.4
+  ping 192.168.1.4
   ```
   
 1. The ping request should not arrive on the remote VM. That's because the virtual networks are not connected.
 
 
-#### Task 1: Configure VNet peering
+#### Task 6: Configure VNet peering
   
-1. In the Azure portal, navigate to the **az1000401-vnet1** virtual network blade.
+1. In the Azure portal, in the lefthand column, click **Virtual Networks**.
 
-1. From the **az1000401-vnet1** virtual network blade, display its **Peerings** blade.
+1. Click the **vnet1** Virtual Network.
 
-1. From the **az1000401-vnet1 - Peerings** blade, click **+ Add** to create a VNet peering with the following settings:
+1. From the **vnet1** blade, display its **Peerings** blade.
 
-    - Name: **az1000401-vnet1-to-az1000402-vnet2**
+1. Click **+ Add** to create a VNet peering with the following settings (leave all other settings at their default value):
 
-    - Virtual network deployment model: **Resource manager**
+    - Name: **vnet1-to-vnet2**
 
-    - Subscription: the name of the Azure subscription you are using in this lab
+    - Virtual network: **vnet2**
 
-    - Virtual network: **az1000402-vnet2**
+    - Name of peering from remote virtual network: **vnet2-to-vnet1**
 
-    - Name of peering from az1000402-vnet2 to az1000401-vnet1: **az1000402-vnet2-to-az1000401-vnet1**
-
-    - Allow virtual network access: **Enabled**
-
-    - Allow forwarded traffic: **disabled**
-
-    - Allow gateway transit: **disabled**
-
-> **Note**: Because you have administrative access to both virtual networks, the portal is configuring both directions (from vnet1 to vnet2, AND vnet2 to vnet1) in a single action. From the CLI, PowerShell, or REST API, these tasks must be performed independently. 
+> **Note**: Because you have administrative access to both virtual networks, the portal is configuring both directions (from vnet1 to vnet2, AND vnet2 to vnet1) in a single action. From the CLI or PowerShell, these tasks must be performed independently. 
 
 
+#### Task 7: Verify connectivity
 
+1. Return to the RDP session to VM2.
 
-### Exercise 3: Validating service chaining
+1. Open a Windows PowerShell console.
 
-The main tasks for this exercise are as follows:
+1. Ping the first VM using the following command, where <remoteip> should be replaced with the IP address you identified on the first VM.
+  ```console
+  ping <remoteip>
+  ```
 
-1. Configure Windows Firewall with Advanced Security on the target Azure VM
+1. For example:
+  ```console
+  ping 192.168.1.4
+  ```
+  
+1. The ping request should arrive on the remote VM. That's because the virtual networks are now connected.
 
-1. Test service chaining between peered virtual networks
-
-
-#### Task 1: Configure Windows Firewall with Advanced Security on the target Azure VM
-
-1. In the Azure portal, navigate to the blade of the **az1000401-vm1** Azure VM. 
-
-1. From the **Overview** pane of the **az1000401-vm1** blade, generate an RDP file and use it to connect to **az1000401-vm1**.
-
-1. When prompted, authenticate by specifying the following credentials:
-
-    - User name: **Student**
-
-    - Password: **Pa55w.rd1234**
-
-1. Within the Remote Desktop session to **az1000401-vm1**, open the **Windows Firewall with Advanced Security** console and enable **File and Printer Sharing (Echo Request - ICMPv4-In)** inbound rule for all profiles.
-
-
-
-
-After completing this lab, you will be able to:
-
-- Create Azure virtual networks and deploy Azure VM by using Azure Resource Manager templates.
-
-- Configure VNet peering.
-
+> Result: In this exercise you connected two virtual networks using peering.
