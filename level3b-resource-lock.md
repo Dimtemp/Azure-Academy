@@ -12,10 +12,12 @@ Scenario: we're going to create two storage accounts, each in it's own resource 
 1. We need two resource groups with each a storage account. Storage account names need to be globally unique. So when entering the final two command's, specify a name that should be globally unique (for example Peter82634). Enter the following command's in the Cloud Shell.
 
 ```powershell
-New-AzResourceGroup -Name STUDENTID1 -Location westeurope
-New-AzResourceGroup -Name STUDENTID2 -Location westeurope
-New-AzStorageAccount -ResourceGroupName STUDENTID1 -SkuName Standard_LRS -Location westeurope
-New-AzStorageAccount -ResourceGroupName STUDENTID2 -SkuName Standard_LRS -Location westeurope
+$id = 'StudentID'   # replace this with your own, unique ID, for example: $id = 'Peter'
+New-AzResourceGroup -Name 
+New-AzResourceGroup -Name "$($id)1" -Location westeurope
+New-AzResourceGroup -Name "$($id)2" -Location westeurope
+New-AzStorageAccount -ResourceGroupName "$($id)1" -SkuName Standard_LRS -Location westeurope
+New-AzStorageAccount -ResourceGroupName "$($id)2" -SkuName Standard_LRS -Location westeurope
 ```
 
 
