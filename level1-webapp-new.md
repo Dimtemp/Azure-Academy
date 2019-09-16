@@ -44,7 +44,3 @@
 2. On the web app blade, use the Browse toolbar icon to open a new browser tab displaying the default App Service home page.
 
 3. Close the browser tab displaying the default App Service home page.
-
-#### Task 4: Deploy sample code to your Web App
-
-1. 
