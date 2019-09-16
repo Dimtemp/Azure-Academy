@@ -29,7 +29,7 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 ```
 
 
-#### Task 2: Enable Azure Network Watcher service
+### Task 2: Enable Azure Network Watcher service
 
 1. In the Azure portal, use the search text box on the **All services** blade to navigate to the **Network Watcher** blade.
 
@@ -38,7 +38,7 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 > **Note**: Before you start this task, ensure that the deployment you started in the previous task has completed. 
 
 
-#### Task 3: Establish peering between Azure virtual networks
+### Task 3: Establish peering between Azure virtual networks
 
 1. In the Azure portal, navigate to the **az1010301b-vnet1** virtual network blade.
 
