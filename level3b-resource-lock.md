@@ -22,7 +22,7 @@ New-AzStorageAccount -ResourceGroupName "$($id)2" -SkuName Standard_LRS -Locatio
 
 #### Task 2: Set resource group-level locks to prevent accidental changes
 
-1. After the resources have been created, optionally refresh the page, and open the **STUDENTID2** resource group.
+1. After the resources have been created, optionally refresh the page, and open the **StudentID2** resource group.
 
 1. From the resource group, select Locks.
 
@@ -35,7 +35,7 @@ New-AzStorageAccount -ResourceGroupName "$($id)2" -SkuName Standard_LRS -Locatio
 
 #### Task 3: Validate functionality of the resource group-level locks
 
-1. In the Azure portal, navigate to the **STUDENTID1** resource group.
+1. In the Azure portal, navigate to the **StudentID1** resource group.
 
 1. Select the storage account to open it.
 
@@ -49,7 +49,7 @@ New-AzStorageAccount -ResourceGroupName "$($id)2" -SkuName Standard_LRS -Locatio
 
 1. Set Replication from **LRS** to **RA-GRS**. Click **Save**. Note that the operation is successful. 
 
-1. In the Azure portal, navigate to the **STUDENTID2** resource group.
+1. In the Azure portal, navigate to the **StudentID2** resource group.
 
 1. Select the storage account to open it.
 
