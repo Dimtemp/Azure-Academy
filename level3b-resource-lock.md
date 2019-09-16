@@ -37,6 +37,8 @@ New-AzStorageAccount -ResourceGroupName "$($id)2" -SkuName Standard_LRS -Locatio
 
 1. In the Azure portal, navigate to the **STUDENTID1** resource group.
 
+1. Select the storage account to open it.
+
 1. Select **Tags**.
 
 1. Try setting the value of the **environment** tag to **dev**. Note that the operation is successful. 
