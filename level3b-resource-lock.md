@@ -13,7 +13,6 @@ Scenario: we're going to create two storage accounts, each in it's own resource 
 
 ```powershell
 $id = 'StudentID'   # replace this with your own, unique ID, for example: $id = 'Peter'
-New-AzResourceGroup -Name 
 New-AzResourceGroup -Name "$($id)1" -Location westeurope
 New-AzResourceGroup -Name "$($id)2" -Location westeurope
 New-AzStorageAccount -ResourceGroupName "$($id)1" -SkuName Standard_LRS -Location westeurope
