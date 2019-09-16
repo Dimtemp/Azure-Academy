@@ -19,7 +19,9 @@ $location = 'westeurope'
 $studentNames = 'name1', 'name2', 'name3'
 
 
-# subscriptions, role assign, contributor (mag geen policies maken, owner niet noodzakelijk)
+# subscriptions, role assign, contributor (, owner niet noodzakelijk)
+# - owner: Global Admin role heeft ownew permissie in subscription
+# - contributor: mag geen policies maken, geen RBAC/IAM, geen resource locks
 
 
 # create policy, vm sku, standard_ds2_v3
