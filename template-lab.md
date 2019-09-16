@@ -13,7 +13,9 @@ Adatum Corporation wants to monitor Azure virtual network connectivity by using 
 
 ### Task 1: Prepare infrastructure for Azure Network Watcher-based monitoring
 
-1. Open Azure Portal, Cloud Shell
+1. Open the Azure Portal
+
+1. Open the Cloud Shell and enter these command's:
 
 ```powershell
 $cred = Get-Credential -UserName student
@@ -26,6 +28,7 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 # fill in a unique name for the storage account. Repeat the previous command when an errormessage is shown.
 ```
 
+
 #### Task 2: Enable Azure Network Watcher service
 
 1. In the Azure portal, use the search text box on the **All services** blade to navigate to the **Network Watcher** blade.
@@ -36,7 +39,6 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 
 
 #### Task 3: Establish peering between Azure virtual networks
-
 
 1. In the Azure portal, navigate to the **az1010301b-vnet1** virtual network blade.
 
@@ -56,20 +58,6 @@ New-AzStorageAccount -ResourceGroupName STUDENTID -SkuName Standard_LRS -Locatio
 
     - Allow gateway transit: disabled
 
-    > **Note**: The Azure portal allows you to configure both directions of the peering simultaneously. When using other management tools, each direction must be configured independently. 
-
-
-> **Result**: After you completed this exercise, you have deployed Azure VMs, an Azure Storage account, and an Azure SQL Database instance by using Azure Resource Manager templates, enabled Azure Network Watcher service, established global peering between Azure virtual networks, and established service endpoints to an Azure Storage account and Azure SQL Database instance.
 
 
 > **Result**: After you completed this exercise, you have used Azure Network Watcher to test network connectivity to an Azure VM via virtual network peering, network connectivity to Azure Storage, and network connectivity to Azure SQL Database.
-
-
-### Objectives
-  
-After completing this lab, you will be able to:
-
--  Deploy Azure VMs, Azure storage accounts, and Azure SQL Database instances by using Azure Resource Manager templates
-
--  Use Azure Network Watcher to monitor network connectivity
-
