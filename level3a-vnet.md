@@ -36,7 +36,7 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 ```powershell
 $id = 'StudentID'   # replace this with your own, unique ID, for example: $id = 'Peter'
 New-AzResourceGroup -Name "$($id)2" -Location westus
-New-AzVirtualNetwork -Name "$($id)2" -Location westus -ResourceGroupName "$($id)2" -Addressprefix '10.2.0.0/16'
+New-AzVirtualNetwork -Name vnet2 -Location westus -ResourceGroupName "$($id)2" -Addressprefix '192.168.0.2.0.0/16'
 ```
 
 
@@ -52,8 +52,8 @@ $password = 'Pa55w.rd1234'
 $securePassword = ConvertTo-SecureString $password  -AsPlainText -Force
 $cred = New-Object System.Management.Automation.PSCredential ($username, $securePassword)
 
-New-AzVM -Name VM1 -Credential $cred -ResourceGroupName Peter1 -VirtualNetworkName vnet1 -Location westeurope
-New-AzVM -Name VM2 -Credential $cred -ResourceGroupName Peter1 -VirtualNetworkName vnet1 -Location westus
+New-AzVM -Name VM1 -Credential $cred -ResourceGroupName "$($id)1" -VirtualNetworkName vnet1 -Location westeurope
+New-AzVM -Name VM2 -Credential $cred -ResourceGroupName "$($id)2" -VirtualNetworkName vnet2 -Location westus
 
 New-AzVM -name "$id"VM2 -credential $cred -location eastus -Addressprefix '10.2.0.0/16' -VirtualNetworkName vnet1 -subnetname default -SubnetAddressPrefix '10.2.0.0/24'
 ```
