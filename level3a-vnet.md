@@ -7,7 +7,7 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 |ResourceGroup|VNet|VM|IP Address|Location|
 |-------------|----|--|----------|--------|
 |StudentID1|VNET1|VM1|10.1.0.4|West Europe|
-|StudentID2|VNET2|VM2|10.2.0.4|East US|
+|StudentID2|VNET2|VM2|192.168.1.4|East US|
 
 
 #### Task 1: Create the first virtual network using the portal
@@ -18,8 +18,9 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 
 1. Create a virtual network using this information (leave all other settings at their default values):
 
-- Name: VNET1
+- Name: vnet1
 - Address space: 10.1.0.0/16
+- You can safely ignore a warning about overlapping address spaces.
 - Resource group, Create new: StudentID1 (for example: Peter1)
 - Location: West Europe
 - Address range: 10.1.0.0/24
@@ -54,8 +55,6 @@ $cred = New-Object System.Management.Automation.PSCredential ($username, $secure
 
 New-AzVM -Name VM1 -Credential $cred -ResourceGroupName "$($id)1" -VirtualNetworkName vnet1 -Location westeurope
 New-AzVM -Name VM2 -Credential $cred -ResourceGroupName "$($id)2" -VirtualNetworkName vnet2 -Location eastus
-
- -Addressprefix '10.2.0.0/16' -subnetname default -SubnetAddressPrefix '10.2.0.0/24'
 ```
 
 > **Result**: After you completed this task, you have created two Azure virtual networks and initiated deployments of two Azure Virtual Machines.
@@ -63,17 +62,21 @@ New-AzVM -Name VM2 -Credential $cred -ResourceGroupName "$($id)2" -VirtualNetwor
 
 #### Task 4: Configure Windows Firewall on the target Azure VM
 
-1. In the Azure portal, in the lefthand column, click **Virtual Machines**.
+1. In the Azure portal, in the lefthand column, click **Resource Groups**.
+
+1. Select the **Student1** resource group.
 
 1. Select **VM1** to open the VM1 blade.
 
-1. Use the Connect button in the top to connect to the VM using RDP.
+1. Use the **Connect** button in the top to connect to the VM using RDP.
 
 1. Use the credentials you specified using the PowerShell command's in the previous task.
 
 1. When logged on to the VM, click Start, Administrative Tools and start **Windows Firewall with Advanced Security**.
 
-1. Select Inbound Rules and enable **File and Printer Sharing (Echo Request - ICMPv4-In)** inbound rule.
+1. Select Inbound Rules.
+
+1. Select and enable **File and Printer Sharing (Echo Request - ICMPv4-In)** inbound rule.
 
 1. Open a Windows PowerShell console.
 
@@ -86,15 +89,17 @@ New-AzVM -Name VM2 -Credential $cred -ResourceGroupName "$($id)2" -VirtualNetwor
 
 #### Task 5: Verify non-connectivity
 
-1. In the Azure portal, in the lefthand column, click **Virtual Machines**.
+1. In the Azure portal, in the lefthand column, click **Resource Groups**.
 
-1. Select **VM2** to open the VM1 blade.
+1. Select the **Student2** resource group.
 
-1. Use the Connect button in the top to connect to the VM using RDP.
+1. Select the **VM2** Virtual Machine to open the VM2 blade.
+
+1. Use the **Connect** button in the top to connect to the VM using RDP.
 
 1. Use the credentials you specified using the PowerShell command's in the previous task.
 
-1. When logged on to the VM, open a Windows PowerShell console.
+1. When logged on to the VM, open a **Windows PowerShell** console.
 
 1. Ping the first VM using the following command, where <remoteip> should be replaced with the IP address you identified on the first VM.
   ```console
