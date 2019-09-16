@@ -10,7 +10,7 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 |StudentID2|VNET2|VM2|192.168.1.4|East US|
 
 
-#### Task 1: Create the first virtual network using the portal
+#### Task 1: Create two virtual networks using the portal
 
 1. In the Azure portal, in the lefthand column, click **Virtual Networks**.
 
@@ -26,6 +26,7 @@ Adatum Corporation wants to implement connectivity between Azure virtual network
 - Address range: 10.1.0.0/24
 
 1. Click Create to create the virtual network.
+
 
 
 #### Task 2: Create the second virtual network using PowerShell
